@@ -5,7 +5,7 @@ const roomController = require("../controllers/roomController.js");
 
 const { register, login } = require('../controllers/authController.js');
 const { protect, authorize } = require('../middleware/authMiddleware.js');
-const upload = require('../../config/multer'); 
+const upload = require('../config/multer.js'); 
 
 // Public routes
 router.post('/register', register);
