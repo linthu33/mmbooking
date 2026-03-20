@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const hotelController = require('../controllers/hotelController');
-const roomController = require("../controllers/roomController");
+const hotelController = require('../controllers/hotelController.js');
+const roomController = require("../controllers/roomController.js");
 
-const { register, login } = require('../controllers/authController');
-const { protect, authorize } = require('../middleware/authMiddleware');
+const { register, login } = require('../controllers/authController.js');
+const { protect, authorize } = require('../middleware/authMiddleware.js');
 const upload = require('../../config/multer'); 
 
 // Public routes
