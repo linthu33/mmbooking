@@ -1,7 +1,7 @@
 // controllers/bookingController.js
 
 const Booking = require('../models/Booking');
-const BookingUser = require('../models/bookingUser');
+const BookingUser = require('../models/BookingUser');
 const { generateBookingID, generateVoucherCode } = require("../utils/booking.utils");
 const { sendBookingEmail, sendSMS } = require("../utils/notify");
 const HotelModel = require('../models/Hotel'); 

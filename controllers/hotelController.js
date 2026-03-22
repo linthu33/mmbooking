@@ -1,5 +1,5 @@
-const Hotel = require("../models/hotel");
-const Room = require("../models/room");
+const Hotel = require("../models/Hotel");
+const Room = require("../models/Room");
 const fs = require('fs');
 // @desc    Create new hotel
 // @route   POST /api/hotels
