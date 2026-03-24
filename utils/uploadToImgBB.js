@@ -2,7 +2,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 const fs = require('fs');
 
-const uploadToImgBB = async (file) => {
+exports.uploadToImgBB = async (file) => {
   const formData = new FormData();
   // ImgBB API Key ကို .env ထဲမှာ ထည့်ထားဖို့ အကြံပြုလိုပါတယ်
   formData.append('image', fs.createReadStream(file.path));
