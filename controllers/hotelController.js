@@ -1,7 +1,7 @@
 const Hotel = require("../models/Hotel");
 const Room = require("../models/Room");
 const fs = require('fs');
-const uploadToImgBB = require("../utils/uploadToImgBB");
+const uploadToImgBB = require("../utils/uploadToImgBB").uploadToImgBB;
 // @desc    Create new hotel
 // @route   POST /api/hotels
 // @access  Public
