@@ -1,6 +1,7 @@
 const Hotel = require("../models/Hotel");
 const Room = require("../models/Room");
 const fs = require('fs');
+const uploadToImgBB = require("../utils/uploadToImgBB");
 // @desc    Create new hotel
 // @route   POST /api/hotels
 // @access  Public
@@ -8,6 +9,8 @@ exports.createHotel = async (req, res) => {
   const uploadedFiles = req.files || [];
 
   try {
+    const imageUploadPromises = uploadedFiles.map(file => uploadToImgBB(file));
+    const imageUrls = await Promise.all(imageUploadPromises);
     // Build hotel data from fields
     const hotelData = {
       hotel_id: Date.now().toString(),
@@ -23,8 +26,8 @@ exports.createHotel = async (req, res) => {
       rating: { star: 5, guest_score: 0, total_reviews: 0 },
       facilities: JSON.parse(req.body.facilities || "{}"),
       policy: JSON.parse(req.body.policy || "{}"),
-      images: uploadedFiles.map(file => ({
-        url: `http://localhost:5000/uploads/${file.filename}`.replaceAll('\\', '/'),
+      images: imageUrls.map(url => ({
+        url: url,
         caption: "Hotel Image"
       }))
     };
@@ -375,3 +378,50 @@ exports.searchHotels = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 }; 
+
+
+
+//old create local hotel image without imgbb
+/*
+exports.createHotel = async (req, res) => {
+  const uploadedFiles = req.files || [];
+
+  try {
+    const imageUploadPromises = uploadedFiles.map(file => uploadToImgBB(file));
+    const imageUrls = await Promise.all(imageUploadPromises);
+    // Build hotel data from fields
+    const hotelData = {
+      hotel_id: Date.now().toString(),
+      name: req.body.name,
+      description: req.body.description,
+      location: {
+        country: req.body.country,
+        city: req.body.city,
+        address: req.body.address,
+        latitude: parseFloat(req.body.latitude),
+        longitude: parseFloat(req.body.longitude),
+      },
+      rating: { star: 5, guest_score: 0, total_reviews: 0 },
+      facilities: JSON.parse(req.body.facilities || "{}"),
+      policy: JSON.parse(req.body.policy || "{}"),
+      images: uploadedFiles.map(file => ({
+        url: `http://localhost:5000/uploads/${file.filename}`.replaceAll('\\', '/'),
+        caption: "Hotel Image"
+      }))
+    };
+
+    const hotel = new Hotel(hotelData);
+    await hotel.save();
+
+    res.status(201).json({ success: true, data: hotel });
+  } catch (err) {
+    // Delete uploaded files on error
+    uploadedFiles.forEach(file => {
+      fs.unlink(file.path, (e) => {
+        if (e) console.error("Failed to delete file:", file.path);
+      });
+    });
+    console.error(err);
+    res.status(400).json({ message: err.message });
+  }
+};*/
