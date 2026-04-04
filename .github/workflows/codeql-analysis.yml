@@ -1,0 +1,36 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  schedule:
+    - cron: "30 1 * * 1" # တစ်ပတ်တစ်ကြိမ် (တနင်္လာနေ့တိုင်း) အလိုအလျောက် scan ဖတ်ရန်
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # CodeQL ကို စတင်ပြင်ဆင်ခြင်း
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: "javascript" # Node.js အတွက် javascript (typescript ပါရင်လည်း ဒါပဲသုံးပါ)
+
+      # ပုံမှန်အတိုင်း build လုပ်ခြင်း (Node.js အတွက် အထူးတလည် မလိုသော်လည်း ထည့်ထားနိုင်သည်)
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      # Analysis ပြုလုပ်ခြင်း
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3

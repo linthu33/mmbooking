@@ -2,8 +2,12 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
-  try {
     // ၁။ Environment Variables ကနေ အချက်အလက်တွေ ယူမယ်
+    if (process.env.NODE_ENV === 'test') {
+    return; 
+  }
+  try {
+  
     const username = encodeURIComponent(process.env.DB_USER); // ဒီနေရာမှာ username အမှန်ကို ထည့်ပါ
     const password = encodeURIComponent(process.env.DB_PASSWORD); // ဒီနေရာမှာ password အမှန်ကို ထည့်ပါ
     const cluster = "cluster0.fb14r.mongodb.net";
