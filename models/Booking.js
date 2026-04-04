@@ -42,7 +42,7 @@ const BookingSchema = new mongoose.Schema(
     hotel: { type: mongoose.Schema.Types.ObjectId, ref: "Hotel", required: true },
     rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Room", required: true }],
     room_nights: { type: Map, of: Number, required: true },
-
+    hotelgenId:{type:String},
     checkin: { type: Date, required: true },
     checkout: { type: Date, required: true },
 

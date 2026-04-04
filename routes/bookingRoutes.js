@@ -14,7 +14,7 @@ router.get('/',bookingController.getAllBookings);
 
 // get single booking
 router.get('/:userId', bookingController.getBookingsByUserId);
-
+router.get('/hotelbooking/:hotelId', bookingController.getBookingsByHotelId);
 // update booking
 router.put('/:id', protect, bookingController.updateBooking);
 

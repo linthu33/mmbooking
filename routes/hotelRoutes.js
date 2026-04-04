@@ -33,5 +33,6 @@ router.get("/ro/getall", roomController.getAllRooms);
 router.get("/ro/:id", roomController.getRoomByHotelId);
 router.put("/ro/:id", roomController.updateRoom);
 router.delete("/ro/:id", roomController.deleteRoom);
-
+//Room Update
+router.post("/ro/avidateupdate", roomController.updateRoomAvailability);
 module.exports = router;

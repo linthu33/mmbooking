@@ -109,7 +109,34 @@ exports.getBookingsByUserId = async (req, res) => {
     });
   }
 };
+exports.getBookingsByHotelId = async (req, res) => {
+  try {
+    const { hotelId } = req.params;
+   
+    const bookings = await Booking.find({ hotelgenId: hotelId })
+      .populate('user', 'username email')
+      .populate('hotel', 'name')
+      .populate('rooms', 'name');  // FIXED: rooms array
 
+    if (bookings.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No bookings found for this hotelId",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: bookings,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 // ============================
 // UPDATE booking
 // ============================
